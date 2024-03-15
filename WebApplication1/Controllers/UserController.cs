@@ -98,7 +98,7 @@ namespace WebApplication1.Controllers
             var userrole = await _db.TblRoles.Where(a => a.Id == assignedRole.RoleId).FirstOrDefaultAsync();
             userdetail.Role = userrole.Name;
 
-             ViewBag.id=userdetail.Id;
+            ViewBag.id=userdetail.Id;
             ViewBag.name = userdetail.Fname;
             ViewBag.role=userdetail.Role;
             return View();
