@@ -22,7 +22,9 @@ public partial class RolebasedContext : DbContext
     public virtual DbSet<TblUserRole> TblUserRoles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
     { 
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
