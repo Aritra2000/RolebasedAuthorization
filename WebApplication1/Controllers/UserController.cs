@@ -89,21 +89,21 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public async Task<IActionResult>Details()
+        public async Task<IActionResult> Details()
         {
             var userid = HttpContext.Session.GetInt32("id");
-            var userdetail = await _db.TblUsers.Where(a => a.Id ==userid).FirstOrDefaultAsync();
+            var userdetail = await _db.TblUsers.Where(a => a.Id == userid).FirstOrDefaultAsync();
             var assignedRole = await _db.TblUserRoles.Where(a => a.UserId == userdetail.Id).FirstOrDefaultAsync();
 
             var userrole = await _db.TblRoles.Where(a => a.Id == assignedRole.RoleId).FirstOrDefaultAsync();
             userdetail.Role = userrole.Name;
 
-            ViewBag.id=userdetail.Id;
+            ViewBag.id = userdetail.Id;
             ViewBag.name = userdetail.Fname;
-            ViewBag.role=userdetail.Role;
+            ViewBag.role = userdetail.Role;
             return View();
         }
-       
+
 
     }
 
