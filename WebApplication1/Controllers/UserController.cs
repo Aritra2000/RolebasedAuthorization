@@ -10,7 +10,7 @@ namespace WebApplication1.Controllers
 
         public UserController(RolebasedContext db)
         {
-            _db = db;
+            _db = db; 
         }
         public IActionResult Index()
         {
