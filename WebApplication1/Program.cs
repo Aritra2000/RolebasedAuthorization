@@ -33,7 +33,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         OnSignedIn = async context =>
         {
-            var user = await _db.TblUsers.Where()
+            var user = await _db.TblUsers.Where() 
         }
     }
 });
