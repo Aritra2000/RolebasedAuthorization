@@ -2,16 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using WebApplication1.Repository.DataAccessOfTables;
 
 namespace WebApplication1.Controllers
 {
     public class UserController : Controller
     {
         RolebasedContext _db;
+        IDataAccessUserTblUser<TblUser> _user;
 
         public UserController(RolebasedContext db)
         {
             _db = db; 
+            
+
         }
         [Authorize(Roles ="admin")]
         public async Task<IActionResult> Index()
@@ -93,7 +97,11 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> Details()
         {
             var userid = HttpContext.Session.GetInt32("id");
+
             var userdetail = await _db.TblUsers.Where(a => a.Id == userid).FirstOrDefaultAsync();
+
+
+
             var assignedRole = await _db.TblUserRoles.Where(a => a.UserId == userdetail.Id).FirstOrDefaultAsync();
 
             var userrole = await _db.TblRoles.Where(a => a.Id == assignedRole.RoleId).FirstOrDefaultAsync();

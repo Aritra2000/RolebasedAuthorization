@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using WebApplication1.Models;
+using WebApplication1.Repository.DataAccessOfTables;
 
-RolebasedContext _db;
+
 
 
 
@@ -18,6 +19,9 @@ builder.Services.AddDbContext<RolebasedContext>(options => options.UseSqlServer(
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache();
 
+builder.Services.AddScoped<IdataAccessTblRoles<TblRole>, DataAccessTblRoles>();
+builder.Services.AddScoped<IDataAccessUserTblUser<TblUser>, DataAccessUserTblUser>();
+builder.Services.AddScoped<IDataAccessTblUserRoles<TblUserRole>, DataAccessTblUserRoles>();
 
 
 //authentication
@@ -25,11 +29,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 {
     options.LoginPath = "/User/Login";
 
-    options.Events=new CookieAuthenticationEvents
+    options.Events = new CookieAuthenticationEvents
     {
-        OnSignedIn=async context =>
+        OnSignedIn = async context =>
         {
-            var user=await _db.TblUsers.Where()
+            var user = await _db.TblUsers.Where()
         }
     }
 });
