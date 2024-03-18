@@ -22,5 +22,5 @@ public partial class TblUser
     public string Password { get; set; } = null!;
 
     [NotMapped]
-    public string? Role { get; set; }
+    public string Role { get; set; }
 }

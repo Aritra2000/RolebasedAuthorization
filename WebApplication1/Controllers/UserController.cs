@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 
@@ -12,9 +13,11 @@ namespace WebApplication1.Controllers
         {
             _db = db; 
         }
-        public IActionResult Index()
+        [Authorize(Roles ="admin")]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var employee = await _db.EmployeeLists.ToListAsync();
+            return View(employee);
         }
         [HttpGet]
         public IActionResult Reg()
@@ -63,10 +66,7 @@ namespace WebApplication1.Controllers
             //fetching
 
             var userdetail = await _db.TblUsers.Where(a => a.Email == user.Email).FirstOrDefaultAsync();
-            //var assignedRole = await _db.TblUserRoles.Where(a => a.UserId == userdetail.Id).FirstOrDefaultAsync();
-
-            //    var userrole = await _db.TblRoles.Where(a => a.Id == assignedRole.RoleId).FirstOrDefaultAsync();
-            //    userdetail.Role = userrole.Name;
+          
 
             ///
             if (validEmail != null)
@@ -74,7 +74,8 @@ namespace WebApplication1.Controllers
                 if (validPassword != null)
                 {
                     HttpContext.Session.SetInt32("id", userdetail.Id);
-                    return RedirectToAction("Details");
+                    
+                    return RedirectToAction("Index");
                 }
                 else
                 {

@@ -1,5 +1,13 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 using WebApplication1.Models;
+
+RolebasedContext _db;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +17,33 @@ builder.Services.AddDbContext<RolebasedContext>(options => options.UseSqlServer(
 
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache();
+
+
+
+//authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.LoginPath = "/User/Login";
+
+    options.Events=new CookieAuthenticationEvents
+    {
+        OnSignedIn=async context =>
+        {
+            var user=await _db.TblUsers.Where()
+        }
+    }
+});
+
+
+
+//authorization policy
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("rolebasedatuthorization", policy => policy.RequireRole("admin"));
+    
+});
+
 
 var app = builder.Build();
 
